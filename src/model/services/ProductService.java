@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.entities.Product;
+import model.services.exceptionservice.ProductServiceException;
 
 public class ProductService {
 
@@ -13,31 +14,31 @@ public class ProductService {
 		listP.add(product);
 	}
 
-	public String listProcucts() {
+	public String listProducts() throws ProductServiceException {
 		if (listP.isEmpty()) {
-			throw new NullPointerException("Lista não pode ser vazia!");
+			throw new ProductServiceException("Lista não pode ser vazia!");
 		}
-		String str = "";
+		StringBuilder sb = new StringBuilder();
 		for (Product p : listP) {
-			str += p.toString();
+			sb.append(p.toString()).append("\n");
 		}
-		return str;
+		return sb.toString();
 	}
 
-	public Product findProduct(String name) throws Exception {
+	public Product findProduct(String name) throws ProductServiceException {
 		if (listP.isEmpty()) {
-			throw new NullPointerException("Lista nao pode ser vazia");
+			throw new ProductServiceException("Lista nao pode ser vazia");
 		}
 		for (Product p : listP) {
 			if (name.trim().equalsIgnoreCase(p.getName())) {
 				return p;
 			}
 		}
-		return null;
+		throw new ProductServiceException("Produto não encontrado.");
 	}
 
-	public Double TotalSum() {
-		Double sum = 0.0;
+	public Double totalSum() {
+		double sum = 0.0;
 		for (Product p : listP) {
 			sum += p.getPrice();
 		}

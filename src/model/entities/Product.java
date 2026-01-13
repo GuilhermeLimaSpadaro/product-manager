@@ -27,12 +27,12 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "ID: " + id + "\nName: " + name + "\nPrice: " + price + "\n";
+		return "ID: " + id + " | Name: " + name + " | Price: " + price + "\n";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		return Objects.hash(id, name);
 	}
 
 	@Override
@@ -44,7 +44,8 @@ public class Product {
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
-		return Objects.equals(name, other.name);
+		return Objects.equals(id, other.id) && Objects.equals(name, other.name);
 	}
-
+	
+	
 }
