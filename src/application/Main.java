@@ -4,7 +4,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import model.entities.Product;
-import model.services.productservice.ProductService;
+import model.services.ProductService;
 
 public class Main {
 
@@ -75,7 +75,7 @@ public class Main {
 		}
 	}
 
-	private static void addProducts(Scanner input, ProductService service) {
+	private static void addProducts(Scanner input, ProductService service) throws Exception {
 		char optionChar;
 		do {
 			System.out.println("Insira os dados do produto.");

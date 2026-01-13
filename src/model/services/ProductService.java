@@ -1,16 +1,21 @@
-package model.services.productservice;
+package model.services;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import model.entities.Product;
-import model.services.exceptionservice.ProductServiceException;
+import model.exceptions.ProductServiceException;
 
 public class ProductService {
 
 	List<Product> listP = new ArrayList<>();
 
-	public void add(Product product) {
+	public void add(Product product) throws ProductServiceException {
+		for(Product p : listP) {
+			if (p.getId().equals(product.getId())) {
+				throw new ProductServiceException("Produto ja cadastrado.");
+			}
+		}
 		listP.add(product);
 	}
 
