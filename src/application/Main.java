@@ -4,7 +4,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import model.entities.Product;
-import model.services.ProductService;
+import model.services.productservice.ProductService;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -41,8 +41,8 @@ public class Main {
 		}
 	}
 
-	//metodos auxiliares
-	
+	// metodos auxiliares
+
 	public static void printMenu() {
 		System.out.println(
 				"=========================\r\n" + "       MENU PRINCIPAL\r\n" + "=========================\r\n" + "");
@@ -55,16 +55,15 @@ public class Main {
 	}
 
 	private static char askContinue(Scanner input) {
-	    while (true) {
-	        String line = input.next().trim().toUpperCase();
-	        if (!line.isEmpty() && (line.charAt(0) == 'S' || line.charAt(0) == 'N')) {
-	            return line.charAt(0);
-	        }
-	        System.out.print("Entrada inválida! Digite S ou N: ");
-	    }
+		while (true) {
+			String line = input.next().trim().toUpperCase();
+			if (!line.isEmpty() && (line.charAt(0) == 'S' || line.charAt(0) == 'N')) {
+				return line.charAt(0);
+			}
+			System.out.print("Entrada inválida! Digite S ou N: ");
+		}
 	}
 
-	
 	private static void addProducts(Scanner input, ProductService service) {
 		char optionChar;
 		do {
@@ -82,7 +81,7 @@ public class Main {
 			service.add(product);
 			System.out.println("\nDeseja adicionar outro produto: S/N");
 			optionChar = askContinue(input);
-		}while(optionChar == 'S');
+		} while (optionChar == 'S');
 	}
 
 	private static void listProducts(ProductService service) {
@@ -105,7 +104,7 @@ public class Main {
 		}
 	}
 
-	private static void showTotal(ProductService service) { 
+	private static void showTotal(ProductService service) {
 		System.out.printf("O total dos produtos é: $%.2f\n", service.totalSum());
 	}
 }

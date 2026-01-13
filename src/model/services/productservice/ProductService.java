@@ -1,4 +1,4 @@
-package model.services;
+package model.services.productservice;
 
 import java.util.ArrayList;
 import java.util.List;
