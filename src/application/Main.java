@@ -7,15 +7,25 @@ import model.entities.Product;
 import model.services.productservice.ProductService;
 
 public class Main {
+
+    //*********//
 	public static void main(String[] args) throws Exception {
 		Locale.setDefault(Locale.US);
 		ProductService pService = new ProductService();
 		try (Scanner input = new Scanner(System.in)) {
-			while (true) {
+			boolean running = true;
+			while (running) {
 				printMenu();
-				int option = input.nextInt();
-				System.out.println();
-				switch (option) {
+				String option = input.nextLine();
+				int op;
+				try {
+					op = Integer.parseInt(option);
+				} catch (Exception e) {
+					System.out.println("Opcao invalida! Digite um numero.");
+					continue;
+				}
+
+				switch (op) {
 				case 1:
 					addProducts(input, pService);
 					break;
@@ -30,7 +40,8 @@ public class Main {
 					break;
 				case 0:
 					System.out.println("Saindo..");
-					return;
+					running = false;
+					break;
 				default:
 					System.out.println("Opção invalida!");
 				}
@@ -41,7 +52,7 @@ public class Main {
 		}
 	}
 
-	// metodos auxiliares
+	// ************//
 
 	public static void printMenu() {
 		System.out.println(
@@ -56,7 +67,7 @@ public class Main {
 
 	private static char askContinue(Scanner input) {
 		while (true) {
-			String line = input.next().trim().toUpperCase();
+			String line = input.nextLine().trim().toUpperCase();
 			if (!line.isEmpty() && (line.charAt(0) == 'S' || line.charAt(0) == 'N')) {
 				return line.charAt(0);
 			}
@@ -68,20 +79,39 @@ public class Main {
 		char optionChar;
 		do {
 			System.out.println("Insira os dados do produto.");
-			input.nextLine();
 			System.out.print("Id: ");
-			Integer id = input.nextInt();
-			input.nextLine();
+			int id = intValidation(input);
 			System.out.print("Nome: ");
 			String name = input.nextLine();
 			System.out.print("Preco: ");
-			Double price = input.nextDouble();
-			input.nextLine();
+			double price = doubleValidation(input);
 			Product product = new Product(id, name, price);
 			service.add(product);
 			System.out.println("\nDeseja adicionar outro produto: S/N");
 			optionChar = askContinue(input);
 		} while (optionChar == 'S');
+	}
+
+	private static double doubleValidation(Scanner input) {
+		while (true) {
+			try {
+				String option = input.nextLine().trim();
+				return Double.parseDouble(option);
+			} catch (NumberFormatException e) {
+				System.out.println("Opcao invalida! Digite um numero.");
+			}
+		}
+	}
+
+	private static int intValidation(Scanner input) {
+		while (true) {
+			try {
+				String option = input.nextLine().trim();
+				return Integer.parseInt(option);
+			} catch (NumberFormatException e) {
+				System.out.println("Opcao invalida! Digite um numero.");
+			}
+		}
 	}
 
 	private static void listProducts(ProductService service) {
@@ -93,7 +123,6 @@ public class Main {
 	}
 
 	private static void findProduct(Scanner input, ProductService service) {
-		input.nextLine();
 		System.out.print("\nInsira o nome do produto desejado: ");
 		String searchName = input.nextLine();
 		try {
